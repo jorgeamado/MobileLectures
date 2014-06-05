@@ -6,6 +6,9 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using System.ComponentModel;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace LecturesDroid
 {
@@ -20,6 +23,7 @@ namespace LecturesDroid
 			SetContentView(Resource.Layout.Main);
 
 			ListView categoriesList = FindViewById<ListView>(Resource.Id.categorieslistView);
+			categoriesList.Adapter = new LecturesAdapter(this, categoriesList);
 		}
 	}
 }

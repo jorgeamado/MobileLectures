@@ -7,6 +7,9 @@ namespace LecturesDroid
 	[Serializable]
 	public class BaseCategory
 	{
+        [XmlIgnore]
+        public BaseCategory Parent;
+
 		[XmlAttribute("name")]
 		public string Name = "lecture name";
 		public BaseCategory()

@@ -1,6 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" ActiveRuntime="Mono 3.4.0" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="LecturesDroid/LecturesAdapter.cs">
+    <Files>
+      <File FileName="LecturesDroid/MainActivity.cs" Line="49" Column="32" />
+      <File FileName="LecturesDroid/Classes/Lecture.cs" Line="1" Column="1" />
+      <File FileName="LecturesDroid/LecturesAdapter.cs" Line="70" Column="18" />
+      <File FileName="LecturesDroid/Assets/LecturesStructure.xml" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
@@ -10,5 +17,5 @@
     <Watch file="../../repository/paperpath/Client/Assets/Classes/Skills/SkillManager.cs" line="107" offsetX="556" offsetY="1524" expression="skill.damage" liveUpdate="False" />
     <Watch file="../../repository/paperpath/Client/Assets/Classes/Raid/ObjectSteering.cs" line="82" offsetX="634" offsetY="1090" expression="closestApproach" liveUpdate="False" />
   </MonoDevelop.Ide.DebuggingService.PinnedWatches>
-  <MonoDevelop.Ide.ItemProperties.LecturesDroid MonoForAntroid.PreferredDevice="3.7&quot; WVGA (Nexus One)" AndroidDeviceId-Debug="emulator-5554" />
+  <MonoDevelop.Ide.ItemProperties.LecturesDroid MonoForAntroid.PreferredDevice="Nexus 4" AndroidDeviceId-Debug="emulator-5554" />
 </Properties>

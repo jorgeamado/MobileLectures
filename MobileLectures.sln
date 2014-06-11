@@ -18,7 +18,6 @@ Global
 		StartupItem = LecturesDroid\LecturesDroid.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
-		$1.TabsToSpaces = False
 		$1.inheritsSet = VisualStudio
 		$1.inheritsScope = text/plain
 		$1.scope = text/x-csharp

@@ -1,75 +1,81 @@
-﻿using Android.App;
-using Android.Widget;
+﻿using Android.Widget;
 using Android.Views;
 using System.Xml.Serialization;
 using System.IO;
-using Android.Speech.Tts;
-using Java.IO;
-using Android.Content.Res;
-using Android.Text;
+using System.Collections.Generic;
+using System;
 
 namespace LecturesDroid
 {
-	public class LecturesAdapter : BaseAdapter<string>
-	{
-		Category MainCategory;
-		Category currentCategory;
+    public class LecturesAdapter : BaseAdapter<string>
+    {
+        public Category CurrentCategory;
+        MainActivity context;
 
-		Activity context;
-		ListView owner;
+        public LecturesAdapter(MainActivity context)
+            : base()
+        {
+            this.context = context;
 
-		public LecturesAdapter(Activity context, ListView owner) : base()
-		{
-			this.context = context;
-			this.owner = owner;
+            using (var fileStream = this.context.Assets.Open("LecturesStructure.xml"))
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(Category));
+                this.CurrentCategory =	xmlSerializer.Deserialize(fileStream) as Category;
+                CreateHierarchy();
+            }
+        }
 
-			using(var fileStream = this.context.Assets.Open("LecturesStructure.xml"))
-			{
-				XmlSerializer xmlSerializer = new XmlSerializer(typeof(Category));
-				this.MainCategory =	xmlSerializer.Deserialize(fileStream) as Category;
-				this.currentCategory = MainCategory;
-			}
-		}
+        void CreateHierarchy()
+        {
+            Queue<Category> categories = new Queue<Category>();
+            categories.Enqueue(CurrentCategory);
+            while (categories.Count > 0)
+            {
+                var current = categories.Dequeue();
+                foreach (var subcagory in current.SubCategories)
+                {
+                    subcagory.Parent = current;
+                    if (subcagory is Category)
+                    {
+                        categories.Enqueue(subcagory as Category);
+                    }
+                }
+            }
+        }
 
-		public override long GetItemId(int position)
-		{
-			return position;
-		}
+        public override long GetItemId(int position)
+        {
+            return position;
+        }
 
-		public override string this[int position]
-		{   
-			get { return this.currentCategory.SubCategories[position].Name; } 
-		}
+        public override string this [int position]
+        {   
+            get { return CurrentCategory.SubCategories[position].Name; } 
+        }
 
-		public override int Count
-		{
-			get { return this.currentCategory.SubCategories.Count; } 
-		}
+        public override int Count
+        {
+            get { return CurrentCategory.SubCategories.Count; } 
+        }
 
-		public override View GetView(int position, View convertView, ViewGroup parent)
-		{
-			View view = convertView; // re-use an existing view, if one is available
-			if (view == null)
-				{ // otherwise create a new one
-					view = context.LayoutInflater.Inflate(Android.Resource.Layout.SimpleListItem1, null);
-				}
-			var textView = view.FindViewById<TextView>(Android.Resource.Id.Text1);
+        public override View GetView(int position, View convertView, ViewGroup parent)
+        {
+            View view = convertView; // re-use an existing view, if one is available
+            if (view == null)
+            { // otherwise create a new one
+                view = context.LayoutInflater.Inflate(Android.Resource.Layout.SimpleListItem1, null);
+            }
+            var textView = view.FindViewById<CustomTextView>(Android.Resource.Id.Text1);
 
-			//TODO create custom view
-			var category = this.currentCategory.SubCategories[position];
-			textView.Text = category.Name;
-			textView.Click += (sender, e) => 
-				{
-					System.Console.WriteLine(sender);
+            textView.Category = CurrentCategory.SubCategories[position];
+            textView.Click += (sender, e) =>
+            {
+                textView.Category.Parent = CurrentCategory;
+                this.context.CurrentCategory = textView.Category;
+            };
 
-					if(category is Category)
-					{
-						this.currentCategory = category as Category;
-						//TODO update list after
-					}
-				};
-			return view;
-		}
-	}
+            return view;
+        }
+    }
 }
 
